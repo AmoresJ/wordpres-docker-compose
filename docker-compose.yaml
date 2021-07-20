@@ -1,7 +1,7 @@
 version: "3.0"
 services:
   wordpress:
-    image: wordpress
+    image: wordpress:5.7.2-apache
     restart: unless-stopped
     ports:
       - "8080:80"
@@ -13,7 +13,7 @@ services:
     volumes:
       - wordpress:/var/www/html
   mariadb: 
-    image: mariadb
+    image: mariadb:10.6.3-focal
     restart: unless-stopped
     volumes:
       - mariadb:/var/lib/mysql
@@ -23,7 +23,7 @@ services:
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: pass
   phpmyadmin:
-    image: phpmyadmin
+    image: phpmyadmin:5.1.1-apache
     restart: unless-stopped
     ports:
       - 5432:80
