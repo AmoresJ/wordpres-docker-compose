@@ -1,0 +1,38 @@
+version: "3.0"
+services:
+  wordpress:
+    image: wordpress
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment: 
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: pass
+    volumes:
+      - wordpress:/var/www/html
+  mariadb: 
+    image: mariadb
+    restart: unless-stopped
+    volumes:
+      - mariadb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: pass
+  phpmyadmin:
+    image: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - 5432:80
+    environment:
+      - PMA_ARBITRARY=0
+      - PMA_HOSTS=mariadb
+      - PMA_USER=wordpress
+      - PMA_PASSWORD=pass
+
+volumes:
+  mariadb: 
+  wordpress:
